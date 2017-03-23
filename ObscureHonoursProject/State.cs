@@ -27,9 +27,10 @@ namespace ObscureHonoursProject
         bool IsFinal();
 
         // returns evaluation of this state
+        // maybe evaluate within alphabeta instead of here.
         int Evaluate();
 
-        // returns whether the minimizing player has the turn in this state
+        // returns whether the 'minimizing player' has the turn in this state
         bool MinimizingHasTurn();
     }
 }
