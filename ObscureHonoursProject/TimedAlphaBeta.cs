@@ -15,10 +15,16 @@ namespace ObscureHonoursProject
         private Stopwatch sw;
         private int msGiven;
 
+        // initialize these objects once and re-use them in every node of AlphaBeta to save time
+        List<Move> bestChildList;
+        List<Move> candidateChildList;
+
         public TimedAlphaBeta(Stopwatch sw, int msGiven)
         {
             this.sw = sw;
             this.msGiven = msGiven;
+            bestChildList = new List<Move>();
+            candidateChildList = new List<Move>();
         }
 
         // state: the root of the (sub)-tree this search expands
@@ -28,10 +34,98 @@ namespace ObscureHonoursProject
         // oldMoveList: Optimal moves of previous iteration, used for better pruning
         // newMoveList: OUTPUT list of moves WE have to populate, at the end of the root-call it must contain
         //      the optimal sequence of moves REVERSED, appended to the \old(newMoveList)
-        public Move FindBestMove (State state, int alpha, int beta, int depthLeft, List<Move> odMoveList, List<Move> newMoveList)
+        public int FindBestMove (State state, int alpha, int beta, int depthLeft, List<Move> oldMoveList, List<Move> newMoveList)
         {
-            // TODO: implement alphabeta stuffs
-            return null;
+            // throw an exception if our player is forced to stop
+            if (sw.ElapsedMilliseconds > msGiven)
+            {
+                newMoveList = null;
+                return 0;
+            }
+
+            // if final depth reached, then return the value of this leaf
+            if (state.IsFinal())
+            {
+                return state.Evaluate();
+            }
+
+            // if not final depth, then generate all possible branches
+            // determine the best move and corresponding state-value
+            List<Move> moves = state.GetPossibleMoves();
+
+            // if only a single move is possible, don't decrease depth
+            if (moves.Count == 1)
+            {
+
+                depthLeft++;
+            }
+            else if (depthLeft <= 0)
+            {
+                return state.Evaluate();
+            }
+
+            // if the list of old-moves is not empty yet, then continue
+            // tracing the best move of the previous iteration by putting the old move
+            // in the first position to be evaluated. This leads to better pruning.
+            if ( !(oldMoveList.Count == 0) )
+            {
+                Move oldMove = oldMoveList.First();
+                oldMoveList.Remove(oldMove);
+                FindCopyAndSwap(oldMove, moves, moves.First());
+            }
+
+            // keep track of the moveList of the best move
+            // combine it with the input moveList to get full move-history
+            Boolean min = state.MinimizingHasTurn();
+            int res = 0;
+            foreach (Move move in moves)
+            {
+                state.DoMove(move);
+                int result = FindBestMove(state, alpha, beta, depthLeft - 1, oldMoveList, candidateChildList);
+                state.UndoMove(move);
+                if ((min && result < beta) || (!min && result > alpha) )
+                {
+                    if (min)
+                        beta = result;
+                    else
+                        alpha = result;
+                    List<Move> temp = candidateChildList;
+                    candidateChildList = bestChildList;
+                    bestChildList = temp;
+                    bestChildList.Add(move);
+                }
+                candidateChildList.Clear();
+                if (alpha >= beta)
+                {
+                    // append child move list to move list
+                    newMoveList.AddRange(bestChildList);
+                    bestChildList.Clear();
+                    return (alpha+beta)/2;
+                }
+            }
+            // append child move list to move list
+            newMoveList.AddRange(bestChildList);
+            bestChildList.Clear();
+            if (min)
+                return beta;
+            else
+                return alpha;
+        }
+
+        // Finds a copy of a Move in a list of Moves, then swaps the found copy with another given move
+        void FindCopyAndSwap(Move toFind, List<Move> moves, Move toSwapWith)
+        {
+            Move moveCopy = null;
+            foreach (Move move in moves)
+            {
+                if (move.Equals(toFind))
+                {
+                    moveCopy = move;
+                    break;
+                }
+            }
+            toFind = toSwapWith;
+            toSwapWith = moveCopy;
         }
     }
 }

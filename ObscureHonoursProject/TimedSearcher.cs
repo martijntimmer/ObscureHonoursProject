@@ -9,6 +9,7 @@ namespace ObscureHonoursProject
 {
     // A class that implements iterative deepening which makes use of alpha-beta pruned minimax search
     // to find the best move for the player which currently has the turn with time as main constraint
+    // Ends slightly later (at leat 1ms) than given, as needs to wrap up search 
     class TimedSearcher
     {
         // Returns the best move from some particular state for the player which has the turn, within the time given
@@ -33,11 +34,11 @@ namespace ObscureHonoursProject
             for (int depthLeft = 1; sw.ElapsedMilliseconds < msGiven; depthLeft++)
             {
                 List<Move> newMoveList = new List<Move>();
-                Move resMove = timedAB.FindBestMove(startState, int.MinValue, int.MaxValue, depthLeft, oldMoveList, newMoveList);
-                if (resMove != null)
+                timedAB.FindBestMove(startState, int.MinValue, int.MaxValue, depthLeft, oldMoveList, newMoveList);
+                if ( !(newMoveList.Count == 0) )
                 {
-                    bestMove = resMove;
                     newMoveList.Reverse();
+                    bestMove = newMoveList.First();
                     oldMoveList = newMoveList;
                 }
                 else break;
