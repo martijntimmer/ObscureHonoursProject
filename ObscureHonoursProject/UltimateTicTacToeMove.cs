@@ -27,5 +27,10 @@ namespace ObscureHonoursProject
         {
             return "place_move " + this.ToString();
         }
+
+        public bool Equals(Move other)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

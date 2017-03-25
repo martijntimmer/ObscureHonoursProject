@@ -8,6 +8,10 @@ namespace ObscureHonoursProject
 {
     class UltimateTicTacToeState : State
     {
+        int[,] field = new int[9, 9];
+        int[,] macroboard = new int[3, 3];
+        bool activePlayer;
+
         public void DoMove(Move move)
         {
             throw new NotImplementedException();
