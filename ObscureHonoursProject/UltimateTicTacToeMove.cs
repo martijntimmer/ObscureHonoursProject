@@ -28,9 +28,9 @@ namespace ObscureHonoursProject
             return "place_move " + this.ToString();
         }
 
-        public bool Equals(Move other)
+        public bool Equals(UltimateTicTacToeMove other)
         {
-            throw new NotImplementedException();
+            return (this.x == other.x && this.y == other.y);
         }
     }
 }
