@@ -33,6 +33,7 @@ namespace ObscureHonoursProject
             return (this.x == other.x && this.y == other.y);
         }
 
+        // This is so obscure... :(
         public bool Equals(Move other)
         {
             if (other.GetType() == this.GetType()) return UTTTEquals((UltimateTicTacToeMove)other);

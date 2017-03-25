@@ -27,12 +27,12 @@ namespace ObscureHonoursProject
             candidateChildList = new List<Move>();
         }
 
-        // state: the root of the (sub)-tree this search expands
-        // alpha: Value used for AlphaBeta pruning - maximum value maximizing player can definitely get
-        // beta: Value used for AlphaBeta pruning - minimum value minimizing player can definitely get
-        // depthLeft: How many more depths we are allowed to explore
-        // oldMoveList: Optimal moves of previous iteration, used for better pruning
-        // newMoveList: OUTPUT list of moves WE have to populate, at the end of the root-call it must contain
+        // state        : the root of the (sub)-tree this search expands
+        // alpha        : Value used for AlphaBeta pruning - maximum value maximizing player can definitely get
+        // beta         : Value used for AlphaBeta pruning - minimum value minimizing player can definitely get
+        // depthLeft    : How many more depths we are allowed to explore
+        // oldMoveList  : Optimal moves of previous iteration, used for better pruning
+        // newMoveList  : OUTPUT list of moves WE have to populate, at the end of the root-call it must contain
         //      the optimal sequence of moves REVERSED, appended to the \old(newMoveList)
         public int FindBestMove (State state, int alpha, int beta, int depthLeft, List<Move> oldMoveList, List<Move> newMoveList)
         {
@@ -44,7 +44,7 @@ namespace ObscureHonoursProject
             }
 
             // if final depth reached, then return the value of this leaf
-            if (state.IsFinal())
+            if (depthLeft == 0 || state.IsFinal())
             {
                 return state.Evaluate();
             }
@@ -56,28 +56,26 @@ namespace ObscureHonoursProject
             // if only a single move is possible, don't decrease depth
             if (moves.Count == 1)
             {
-
                 depthLeft++;
-            }
-            else if (depthLeft <= 0)
-            {
-                return state.Evaluate();
             }
 
             // if the list of old-moves is not empty yet, then continue
             // tracing the best move of the previous iteration by putting the old move
             // in the first position to be evaluated. This leads to better pruning.
-            if ( !(oldMoveList.Count == 0) )
+            if ( oldMoveList.Count != 0 )
             {
                 Move oldMove = oldMoveList.First();
-                oldMoveList.Remove(oldMove);
+                oldMoveList.RemoveAt(0);
+                // Is this really less efficient than just processing the oldMove first?
+                // Especially if we properly implement hashing this should be the fastest method.
+                // moves.Insert(0, oldMove);
                 FindCopyAndSwap(oldMove, moves, moves.First());
             }
 
             // keep track of the moveList of the best move
             // combine it with the input moveList to get full move-history
             Boolean min = state.MinimizingHasTurn();
-            int res = 0;
+/* !!!!!! */int res = 0; 
             foreach (Move move in moves)
             {
                 state.DoMove(move);
@@ -90,11 +88,11 @@ namespace ObscureHonoursProject
                     else
                         alpha = result;
                     List<Move> temp = candidateChildList;
-                    candidateChildList = bestChildList;
+                    candidateChildList = bestChildList; // Does this copy the list?
                     bestChildList = temp;
                     bestChildList.Add(move);
                 }
-                candidateChildList.Clear();
+                candidateChildList.Clear(); // Why do we clear it?
                 if (alpha >= beta)
                 {
                     // append child move list to move list
