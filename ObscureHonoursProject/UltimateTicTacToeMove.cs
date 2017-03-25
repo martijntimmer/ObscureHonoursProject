@@ -28,9 +28,15 @@ namespace ObscureHonoursProject
             return "place_move " + this.ToString();
         }
 
-        public bool Equals(UltimateTicTacToeMove other)
+        public bool UTTTEquals(UltimateTicTacToeMove other)
         {
             return (this.x == other.x && this.y == other.y);
+        }
+
+        public bool Equals(Move other)
+        {
+            if (other.GetType() == this.GetType()) return UTTTEquals((UltimateTicTacToeMove)other);
+            return false;
         }
     }
 }
