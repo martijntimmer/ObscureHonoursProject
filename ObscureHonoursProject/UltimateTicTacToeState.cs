@@ -9,12 +9,40 @@ namespace ObscureHonoursProject
     class UltimateTicTacToeState : State
     {
         int[,] field = new int[9, 9];
-        int[,] macroboard = new int[3, 3];
+        int[,] macro = new int[3, 3];
         bool activePlayer;
+        bool gameOver = false;
 
-        public void DoMove(Move move)
+        // Generate state from given engine string
+        // Generally always used to parse 
+        UltimateTicTacToeState(String fieldString, String macroString)
         {
-            throw new NotImplementedException();
+            String[] fieldArray = fieldString.Split(',');
+            for (int i = 0; i != 81; i++)
+            {
+                field[i % 9, i / 9] = Int32.Parse(fieldArray[i]);
+            }
+
+            String[] macroArray = macroString.Split(',');
+            for (int i = 0; i != 9; i++)
+            {
+                macro[i % 3, i / 3] = Int32.Parse(macroArray[i]);
+            }
+
+            //Our turn
+            activePlayer = true;
+        }
+        
+        public void DoMove(UltimateTicTacToeMove move)
+        {
+            // Set to 1 / 2 depending on player
+            field[move.x, move.y] (activePlayer ? "1" : "2");
+            // Check fields for winner
+
+            // Check macro for winner
+
+            // Alternate active player
+            activePlayer ^= true;
         }
 
         public int Evaluate()
@@ -29,12 +57,12 @@ namespace ObscureHonoursProject
 
         public bool IsFinal()
         {
-            throw new NotImplementedException();
+            return gameOver;
         }
 
-        public bool MinimizingHasTurn()
+        public bool MaximizingHasTurn()
         {
-            throw new NotImplementedException();
+            return activePlayer;
         }
 
         public void UndoMove(Move move)

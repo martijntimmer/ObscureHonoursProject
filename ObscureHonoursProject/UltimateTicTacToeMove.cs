@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     {
         // In Ultimate Tic Tac Toe a move is simply defined by an x and a y.
         // So without further ado:
-        private int x, y;
+        public int x, y;
 
         UltimateTicTacToeMove(int x, int y)
         {
@@ -27,17 +27,12 @@ namespace ObscureHonoursProject
         {
             return "place_move " + this.ToString();
         }
-
-        public bool UTTTEquals(UltimateTicTacToeMove other)
-        {
-            return (this.x == other.x && this.y == other.y);
-        }
+        
 
         // This is so obscure... :(
-        public bool Equals(Move other)
+        public bool Equals(UltimateTicTacToeMove other)
         {
-            if (other.GetType() == this.GetType()) return UTTTEquals((UltimateTicTacToeMove)other);
-            return false;
+            return (other.x == this.x) && (other.y == this.y);
         }
     }
 }

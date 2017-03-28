@@ -30,7 +30,8 @@ namespace ObscureHonoursProject
         // maybe evaluate within alphabeta instead of here.
         int Evaluate();
 
-        // returns whether the 'minimizing player' has the turn in this state
-        bool MinimizingHasTurn();
+        // returns whether the 'maximizing player' has the turn in this state
+        // Usually this is us
+        bool MaximizingHasTurn();
     }
 }
