@@ -16,6 +16,17 @@ namespace ObscureHonoursProject
     {
         static void Main(string[] args)
         {
+            // MartijnTest();
+            ToonTest();
+        }
+
+        private static void ToonTest()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MartijnTest()
+        {
             // Comment
             NeuralNetwork[] individuals = new NeuralNetwork[100];
             for (int i = 0; i < individuals.Length; i++) individuals[i] = new NeuralNetwork(2, 1);
