@@ -1,10 +1,4 @@
-﻿using GeneticSharp.Domain;
-using GeneticSharp.Domain.Crossovers;
-using GeneticSharp.Domain.Mutations;
-using GeneticSharp.Domain.Populations;
-using GeneticSharp.Domain.Selections;
-using GeneticSharp.Domain.Terminations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +31,7 @@ namespace ObscureHonoursProject
             /* Selector selector = new StochasticAcceptanceSelector();
              Crossover crossover = new UniformCrossover(0.5);
              Mutation mutation = new Mutation(0.3);    */
-            var selection = new TournamentSelection();
+            /*var selection = new TournamentSelection();
             var crossover = new UniformCrossover();
             var mutation = new UniformMutation(true);
             var fitness = new MyProblemFitness();
@@ -61,7 +55,7 @@ namespace ObscureHonoursProject
             int steps = 0;
 
             Console.ReadKey();
-            Main(null);
+            Main(null);*/
         }
 
         private static void bruteforceBenchmark(int[][] inputData, int[] outputData)

@@ -10,7 +10,6 @@ namespace ObscureHonoursProject
         public MyProblemFitness()
         {
             network = new NeuralNetwork(2, 1);
-
         }
 
         public double Evaluate(IChromosome chromosome)
