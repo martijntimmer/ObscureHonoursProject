@@ -34,7 +34,7 @@ namespace ObscureHonoursProject
         // oldMoveList  : Optimal moves of previous iteration, used for better pruning
         // newMoveList  : OUTPUT list of moves WE have to populate, at the end of the root-call it must contain
         //      the optimal sequence of moves REVERSED, appended to the \old(newMoveList)
-        public int FindBestMove (UTTTState state, int alpha, int beta, int depthLeft, List<UTTTMove> oldMoveList, List<UTTTMove> newMoveList)
+        public int FindBestMove (State state, int alpha, int beta, int depthLeft, List<Move> oldMoveList, List<Move> newMoveList)
         {
             // throw an exception if our player is forced to stop
             if (sw.ElapsedMilliseconds > msGiven)
