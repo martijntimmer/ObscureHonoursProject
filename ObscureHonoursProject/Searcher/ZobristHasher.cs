@@ -43,7 +43,7 @@ namespace ObscureHonoursProject
             return originalCode ^ board[targetPosition.Item1, targetPosition.Item2, pieceID];
         }
 
-        // gets the original hashcode, the actual value doesn't actually matter much...
+        // gets the original hashcode, the actual value doesn't actually matter
         public int getOriginalHashcode ()
         {
             return 0;
