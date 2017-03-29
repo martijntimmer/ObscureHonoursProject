@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ObscureHonoursProject
 {
-    class UltimateTicTacToeState : State
+    class UltimateTicTacToeState
     {
         int[,] field = new int[9, 9];
         int[,] macro = new int[3, 3];
@@ -36,7 +36,7 @@ namespace ObscureHonoursProject
         public void DoMove(UltimateTicTacToeMove move)
         {
             // Set to 1 / 2 depending on player
-            field[move.x, move.y] (activePlayer ? "1" : "2");
+            field[move.x, move.y] = (activePlayer ? 1 : 2);
             // Check fields for winner
 
             // Check macro for winner

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ObscureHonoursProject
 {
-    class UltimateTicTacToeMove : Move
+    class UltimateTicTacToeMove
     {
         // In Ultimate Tic Tac Toe a move is simply defined by an x and a y.
         // So without further ado:
@@ -28,8 +28,6 @@ namespace ObscureHonoursProject
             return "place_move " + this.ToString();
         }
         
-
-        // This is so obscure... :(
         public bool Equals(UltimateTicTacToeMove other)
         {
             return (other.x == this.x) && (other.y == this.y);
