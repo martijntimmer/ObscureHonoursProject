@@ -15,6 +15,9 @@ namespace ObscureHonoursProject
         // undefined if IsFinal()
         List<Move> GetPossibleMoves();
 
+        // returns hashcode of the state (use ZobristHasher)
+        int GetHashCode();
+
         // executes move
         // modifies this
         void DoMove(Move move);
