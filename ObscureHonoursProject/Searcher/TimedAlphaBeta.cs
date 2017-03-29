@@ -16,15 +16,15 @@ namespace ObscureHonoursProject
         private int msGiven;
 
         // initialize these objects once and re-use them in every node of AlphaBeta to save time
-        List<Move> bestChildList;
-        List<Move> candidateChildList;
+        List<UTTTMove> bestChildList;
+        List<UTTTMove> candidateChildList;
 
         public TimedAlphaBeta(Stopwatch sw, int msGiven)
         {
             this.sw = sw;
             this.msGiven = msGiven;
-            bestChildList = new List<Move>();
-            candidateChildList = new List<Move>();
+            bestChildList = new List<UTTTMove>();
+            candidateChildList = new List<UTTTMove>();
         }
 
         // state        : the root of the (sub)-tree this search expands
@@ -34,7 +34,7 @@ namespace ObscureHonoursProject
         // oldMoveList  : Optimal moves of previous iteration, used for better pruning
         // newMoveList  : OUTPUT list of moves WE have to populate, at the end of the root-call it must contain
         //      the optimal sequence of moves REVERSED, appended to the \old(newMoveList)
-        public int FindBestMove (State state, int alpha, int beta, int depthLeft, List<Move> oldMoveList, List<Move> newMoveList)
+        public int FindBestMove (UTTTState state, int alpha, int beta, int depthLeft, List<UTTTMove> oldMoveList, List<UTTTMove> newMoveList)
         {
             // throw an exception if our player is forced to stop
             if (sw.ElapsedMilliseconds > msGiven)
@@ -51,7 +51,7 @@ namespace ObscureHonoursProject
 
             // if not final depth, then generate all possible branches
             // determine the best move and corresponding state-value
-            List<Move> moves = state.GetPossibleMoves();
+            List<UTTTMove> moves = state.GetPossibleMoves();
 
             // if only a single move is possible, don't decrease depth
             if (moves.Count == 1)
@@ -64,7 +64,7 @@ namespace ObscureHonoursProject
             // in the first position to be evaluated. This leads to better pruning.
             if ( oldMoveList.Count != 0 )
             {
-                Move oldMove = oldMoveList.First();
+                UTTTMove oldMove = oldMoveList.First();
                 oldMoveList.RemoveAt(0);
                 // Is this really less efficient than just processing the oldMove first?
                 // Especially if we properly implement hashing this should be the fastest method.
@@ -76,7 +76,7 @@ namespace ObscureHonoursProject
             // combine it with the input moveList to get full move-history
             Boolean min = state.MinimizingHasTurn();
 /* !!!!!! */int res = 0; 
-            foreach (Move move in moves)
+            foreach (UTTTMove move in moves)
             {
                 state.DoMove(move);
                 int result = FindBestMove(state, alpha, beta, depthLeft - 1, oldMoveList, candidateChildList);
@@ -87,7 +87,7 @@ namespace ObscureHonoursProject
                         beta = result;
                     else
                         alpha = result;
-                    List<Move> temp = candidateChildList;
+                    List<UTTTMove> temp = candidateChildList;
                     candidateChildList = bestChildList; // Does this copy the list?
                     bestChildList = temp;
                     bestChildList.Add(move);
@@ -111,10 +111,10 @@ namespace ObscureHonoursProject
         }
 
         // Finds a copy of a Move in a list of Moves, then swaps the found copy with another given move
-        void FindCopyAndSwap(Move toFind, List<Move> moves, Move toSwapWith)
+        void FindCopyAndSwap(UTTTMove toFind, List<UTTTMove> moves, UTTTMove toSwapWith)
         {
-            Move moveCopy = null;
-            foreach (Move move in moves)
+            UTTTMove moveCopy = null;
+            foreach (UTTTMove move in moves)
             {
                 if (move.Equals(toFind))
                 {

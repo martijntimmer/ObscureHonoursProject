@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ObscureHonoursProject
 {
-    class UltimateTicTacToeState
+    class UTTTState
     {
         int[,] field = new int[9, 9];
         int[,] macro = new int[3, 3];
@@ -15,7 +15,7 @@ namespace ObscureHonoursProject
 
         // Generate state from given engine string
         // Generally always used to parse 
-        UltimateTicTacToeState(String fieldString, String macroString)
+        UTTTState(String fieldString, String macroString)
         {
             String[] fieldArray = fieldString.Split(',');
             for (int i = 0; i != 81; i++)
@@ -33,7 +33,7 @@ namespace ObscureHonoursProject
             activePlayer = true;
         }
         
-        public void DoMove(UltimateTicTacToeMove move)
+        public void DoMove(UTTTMove move)
         {
             // Set to 1 / 2 depending on player
             field[move.x, move.y] = (activePlayer ? 1 : 2);
@@ -45,12 +45,17 @@ namespace ObscureHonoursProject
             activePlayer ^= true;
         }
 
+        public void UndoMove(UTTTMove move)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Evaluate()
         {
             throw new NotImplementedException();
         }
 
-        public List<Move> GetPossibleMoves()
+        public List<UTTTMove> GetPossibleMoves()
         {
             throw new NotImplementedException();
         }
@@ -60,14 +65,9 @@ namespace ObscureHonoursProject
             return gameOver;
         }
 
-        public bool MaximizingHasTurn()
+        public bool MinimizingHasTurn()
         {
-            return activePlayer;
-        }
-
-        public void UndoMove(Move move)
-        {
-            throw new NotImplementedException();
+            return !activePlayer;
         }
     }
 }
