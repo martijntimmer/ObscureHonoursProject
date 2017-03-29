@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
+    <Compile Include="MyMutation.cs" />
     <Compile Include="MyProblemChromosome.cs" />
     <Compile Include="MyProblemFitness.cs" />
     <Compile Include="Neural Network\Crossover\Crossover.cs" />
