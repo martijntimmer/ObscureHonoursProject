@@ -19,12 +19,12 @@ namespace ObscureHonoursProject
 
         public override Gene GenerateGene(int geneIndex)
         {
-            // if (isFirst)
-            double val = Helper.GetRandom() * 30 - 15;
-                return new Gene(val);
-           // double val = (double)(GetGene(geneIndex).Value) + Helper.GetRandom() * 5 - 2.5;
-            
-            //return new Gene(val);
+            double val;
+             if (isFirst)
+               val = Helper.GetRandom() * 30 - 15;
+            else val = (double)GetGene(geneIndex).Value + Helper.GetRandom() * 5 - 2.5;//Helper.GetRandom() * 5 - 2.5;
+
+            return new Gene(val);
         }
     }
 }

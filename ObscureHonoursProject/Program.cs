@@ -28,13 +28,13 @@ namespace ObscureHonoursProject
              Mutation mutation = new Mutation(0.3);    */
             var selection = new TournamentSelection();
             var crossover = new UniformCrossover();
-            var mutation = new UniformMutation();
+            var mutation = new UniformMutation(true);
             var fitness = new MyProblemFitness();
             var chromosome = new MyProblemChromosome(9);
             var population = new Population(80, 100, chromosome);
             var ga = new GeneticAlgorithm(population, fitness, selection, crossover, mutation);
-            ga.Termination = new FitnessThresholdTermination(7);
-            ga.MutationProbability = 1f;
+            ga.Termination = new FitnessThresholdTermination(80);
+            ga.MutationProbability = 0.3f;
             ga.GenerationRan += delegate
             {
                 MyProblemChromosome bestChromosome = (MyProblemChromosome)ga.Population.BestChromosome;
@@ -50,6 +50,7 @@ namespace ObscureHonoursProject
             int steps = 0;
 
             Console.ReadKey();
+            Main(null);
         }
 
         private static void bruteforceBenchmark(int[][] inputData, int[] outputData)
