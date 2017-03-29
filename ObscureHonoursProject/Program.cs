@@ -16,7 +16,15 @@ namespace ObscureHonoursProject
 
         private static void ToonTest()
         {
-            
+            UTTTState state = new UTTTState(
+                "0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                "-1, -1, 0, 0, 0, 0, 0, 0, 0");
+            UTTTMove[] moveArray = state.GetPossibleMoves().ToArray();
+            foreach (UTTTMove move in moveArray)
+            {
+                Console.WriteLine(move.ToString());
+            }
+            Console.ReadKey();
         }
 
         private static void MartijnTest()

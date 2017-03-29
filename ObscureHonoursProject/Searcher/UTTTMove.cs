@@ -12,7 +12,7 @@ namespace ObscureHonoursProject
         // So without further ado:
         public int x, y;
 
-        UTTTMove(int x, int y)
+        public UTTTMove(int x, int y)
         {
             this.x = x;
             this.y = y;
