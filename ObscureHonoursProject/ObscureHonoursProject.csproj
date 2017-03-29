@@ -94,6 +94,7 @@
     <Compile Include="Searcher\State.cs" />
     <Compile Include="Searcher\TimedAlphaBeta.cs" />
     <Compile Include="Searcher\TimedSearcher.cs" />
+    <Compile Include="Searcher\ZobristHasher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
