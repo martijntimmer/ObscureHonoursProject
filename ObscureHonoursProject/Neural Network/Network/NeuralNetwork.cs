@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     class NeuralNetwork
     {
         private InputLayer inputLayer;
-        private Layer hiddenLayer;
+        private List<Layer> hiddenLayer;
         private Layer outputLayer;
         private List<Layer> layers;
         public double Fitness;
@@ -34,12 +34,14 @@ namespace ObscureHonoursProject
         public NeuralNetwork(int numInputs, int numOutputs, int numHidden = 1)
         {
             inputLayer = new InputLayer(numInputs);
-            hiddenLayer = new Layer(inputLayer, HIDDEN_NODES);
-            outputLayer = new Layer(hiddenLayer, numOutputs);
+            hiddenLayer.Add(new Layer(inputLayer, HIDDEN_NODES));
+            for (int i = 1; i < numHidden; i++)
+            hiddenLayer.Add(new Layer(hiddenLayer[i-1], HIDDEN_NODES));
+            outputLayer = new Layer(hiddenLayer[numHidden-1], numOutputs);
 
             layers = new List<Layer>();
             layers.Add(inputLayer);
-            layers.Add(hiddenLayer);
+            layers.AddRange()
             layers.Add(outputLayer);
         }
 
