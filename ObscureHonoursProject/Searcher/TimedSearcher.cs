@@ -15,7 +15,7 @@ namespace ObscureHonoursProject
         // Returns the best move from some particular state for the player which has the turn, within the time given
         // Returns random move if not enough time is given
         // pre: startState != null && !startState.isFinal()
-        public Move FindBestMove(State startState, int msGiven)
+        public UTTTMove FindBestMove(UTTTState startState, int msGiven)
         {
             if (startState == null || startState.IsFinal())
             {
@@ -27,13 +27,13 @@ namespace ObscureHonoursProject
             sw.Start();
 
             // iterative deepening
-            Move bestMove = null;
-            List<Move> oldMoveList = new List<Move>();
+            UTTTMove bestMove = null;
+            List<UTTTMove> oldMoveList = new List<UTTTMove>();
             TimedAlphaBeta timedAB = new TimedAlphaBeta(sw, msGiven);
 
             for (int depthLeft = 1; sw.ElapsedMilliseconds < msGiven; depthLeft++)
             {
-                List<Move> newMoveList = new List<Move>();
+                List<UTTTMove> newMoveList = new List<UTTTMove>();
                 timedAB.FindBestMove(startState, int.MinValue, int.MaxValue, depthLeft, oldMoveList, newMoveList);
                 if ( !(newMoveList.Count == 0) )
                 {

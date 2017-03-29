@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ObscureHonoursProject
 {
-    class UltimateTicTacToeMove
+    class UTTTMove
     {
         // In Ultimate Tic Tac Toe a move is simply defined by an x and a y.
         // So without further ado:
         public int x, y;
 
-        UltimateTicTacToeMove(int x, int y)
+        UTTTMove(int x, int y)
         {
             this.x = x;
             this.y = y;
@@ -28,7 +28,7 @@ namespace ObscureHonoursProject
             return "place_move " + this.ToString();
         }
         
-        public bool Equals(UltimateTicTacToeMove other)
+        public bool Equals(UTTTMove other)
         {
             return (other.x == this.x) && (other.y == this.y);
         }
