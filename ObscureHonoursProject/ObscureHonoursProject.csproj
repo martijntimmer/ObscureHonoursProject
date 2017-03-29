@@ -85,8 +85,8 @@
     <Compile Include="Neural Network\Network\Population.cs" />
     <Compile Include="Neural Network\Selection\Selector.cs" />
     <Compile Include="Neural Network\Selection\StochasticAcceptanceSelector.cs" />
-    <Compile Include="Searcher\UltimateTicTacToeMove.cs" />
-    <Compile Include="Searcher\UltimateTicTacToeState.cs" />
+    <Compile Include="Searcher\UTTTMove.cs" />
+    <Compile Include="Searcher\UTTTState.cs" />
     <Compile Include="Searcher\Move.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

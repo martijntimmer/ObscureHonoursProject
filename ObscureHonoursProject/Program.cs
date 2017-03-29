@@ -22,7 +22,7 @@ namespace ObscureHonoursProject
 
         private static void ToonTest()
         {
-            throw new NotImplementedException();
+            
         }
 
         private static void MartijnTest()
