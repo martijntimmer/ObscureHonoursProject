@@ -41,26 +41,26 @@ namespace ObscureHonoursProject
 
             layers = new List<Layer>();
             layers.Add(inputLayer);
-            layers.AddRange()
+           // layers.AddRange()
             layers.Add(outputLayer);
         }
 
         public NeuralNetwork(NeuralNetwork original)
         {
             inputLayer = new InputLayer(original.inputLayer.nodes.Length);
-            hiddenLayer = new Layer(inputLayer, HIDDEN_NODES);
-            outputLayer = new Layer(hiddenLayer, original.outputLayer.nodes.Length);
+          //  hiddenLayer = new Layer(inputLayer, HIDDEN_NODES);
+          //  outputLayer = new Layer(hiddenLayer, original.outputLayer.nodes.Length);
 
             layers = new List<Layer>();
             layers.Add(inputLayer);
-            layers.Add(hiddenLayer);
+         //   layers.Add(hiddenLayer);
             layers.Add(outputLayer);
         }
 
         public double[] Evaluate(int[] input)
         {
             inputLayer.SetValues(input);
-            hiddenLayer.Update();
+          //  hiddenLayer.Update();
             outputLayer.Update();
             return outputLayer.GetValues();
         }
