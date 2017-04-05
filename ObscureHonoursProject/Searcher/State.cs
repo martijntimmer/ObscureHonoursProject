@@ -31,7 +31,7 @@ namespace ObscureHonoursProject
 
         // returns evaluation of this state
         // maybe evaluate within alphabeta instead of here.
-        int Evaluate();
+        double Evaluate();
 
         // returns whether the 'maximizing player' has the turn in this state
         // Usually this is us
