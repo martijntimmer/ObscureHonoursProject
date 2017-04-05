@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     // A class that implements iterative deepening which makes use of alpha-beta pruned minimax search
     // to find the best move for the player which currently has the turn with time as main constraint
     // Ends slightly later (at leat 1ms) than given, as needs to wrap up search 
-    class TimedSearcherWIP
+    class TimedSearcher
     {
         // Returns the best move from some particular state for the player which has the turn, within the time given
         // Returns random move if not enough time is given

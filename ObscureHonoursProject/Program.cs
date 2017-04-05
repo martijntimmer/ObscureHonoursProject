@@ -11,12 +11,76 @@ namespace ObscureHonoursProject
         static void Main(string[] args)
         {
             // MartijnTest();
-            ToonTest();
+            //ToonTest();
+            RealMain();
+        }
+
+        private static void RealMain()
+        {
+            TimedSearcher searcher = new TimedSearcher();
+            ZobristHasher zobristHasher = new ZobristHasher(9, 9, 2);
+            UTTTState currentState = null;
+
+            int timePerMove;
+            int timebank;
+            String field = null;
+            String macroboard = null;
+            bool weArePlayerOne = false;
+
+            while (Console.KeyAvailable)
+            {
+                String line = Console.In.ReadLine();
+                if (line.Length == 0) { continue; }
+                String[] parts = line.Split(' ');
+                switch (parts[0])
+                {
+                    case "settings":
+                       switch (parts[1])
+                        {
+                            case "time_per_move":
+                                timePerMove = int.Parse(parts[2]);
+                                break;
+                            case "timebank":
+                                timebank = int.Parse(parts[2]);
+                                break;
+                            case "field":
+                                field = parts[2];
+                                break;
+                            case "macroboard":
+                                macroboard = parts[2];
+                                break;
+                            case "your_botid":
+                                weArePlayerOne = (int.Parse(parts[2]) == 1);
+                                break;
+                        }
+                        break;
+                    case "update":
+                        switch(parts[2])
+                        {
+                            case "field":
+                                field = parts[2];
+                                break;
+                            case "macroboard":
+                                macroboard = parts[2];
+                                break;
+                        }
+                        break;
+                    case "action":
+                        currentState = new UTTTState(field, macroboard, zobristHasher, weArePlayerOne);
+                        UTTTMove chosen = searcher.FindBestMove(currentState, 10000);
+                        Console.WriteLine($"place_move {chosen.x} {chosen.y}");
+                        Console.Out.Flush();
+                        break;
+                    default:
+                        // error
+                        break;
+                }
+            }
         }
 
         private static void ToonTest()
         {
-            UTTTState state = new UTTTState(
+            /*UTTTState state = new UTTTState(
                 "0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
                 "-1, -1, 0, 0, 0, 0, 0, 0, 0");
             UTTTMove[] moveArray = state.GetPossibleMoves().ToArray();
@@ -24,7 +88,7 @@ namespace ObscureHonoursProject
             {
                 Console.WriteLine(move.ToString());
             }
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
 
         private static void MartijnTest()
