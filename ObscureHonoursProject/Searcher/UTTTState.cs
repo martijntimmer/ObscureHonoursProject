@@ -21,6 +21,14 @@ namespace ObscureHonoursProject
         bool activePlayer; // our bot active <=> activePlayer == true
         bool gameOver = false;
 
+        ZobristHasher zobristHasher;
+        private int hashCode;
+
+        public override int GetHashCode()
+        {
+            return hashCode;
+        }
+
         // Generate state from given engine string
         // Generally always used to parse 
         public UTTTState(String fieldString, String macroString)
@@ -44,11 +52,14 @@ namespace ObscureHonoursProject
 
             //Our turn
             activePlayer = true;
+            this.hashCode = zobristHasher.getOriginalHashcode();
         }
+
 
         public void UndoMove(UTTTMove move)
         {
             field[move.x, move.y] = 0;
+            hashCode = zobristHasher.getNewHashcode(hashCode, new Tuple<int,int> (move.x, move.y), activePlayer ? 0 : 1);
             UpdateState(move);
         }
 
@@ -56,6 +67,7 @@ namespace ObscureHonoursProject
         {
             // Set to 1 / 2 depending on player
             field[move.x, move.y] = (activePlayer ? 1 : 2);
+            hashCode = zobristHasher.getNewHashcode(hashCode, new Tuple<int, int>(move.x, move.y), activePlayer ? 1 : 0);
             UpdateState(move);
         }
 
