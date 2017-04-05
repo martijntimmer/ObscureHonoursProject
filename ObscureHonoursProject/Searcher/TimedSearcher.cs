@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     // A class that implements iterative deepening which makes use of alpha-beta pruned minimax search
     // to find the best move for the player which currently has the turn with time as main constraint
     // Ends slightly later (at leat 1ms) than given, as needs to wrap up search 
-    class TimedSearcher
+    class TimedSearcherWIP
     {
         // Returns the best move from some particular state for the player which has the turn, within the time given
         // Returns random move if not enough time is given
@@ -28,20 +28,18 @@ namespace ObscureHonoursProject
 
             // iterative deepening
             UTTTMove bestMove = null;
-            List<UTTTMove> oldMoveList = new List<UTTTMove>();
-            TimedAlphaBeta timedAB = new TimedAlphaBeta(sw, msGiven);
+            TimedAlphaBetaWIP timedAB = new TimedAlphaBetaWIP(sw, msGiven, startState);
 
             for (int depthLeft = 1; sw.ElapsedMilliseconds < msGiven; depthLeft++)
             {
                 List<UTTTMove> newMoveList = new List<UTTTMove>();
-                timedAB.FindBestMove(startState, int.MinValue, int.MaxValue, depthLeft, oldMoveList, newMoveList);
-                if ( !(newMoveList.Count == 0) )
+                TimedAlphaBetaWIP.AlphaBetaIterationResult res = timedAB.computeNextIteration();
+                if (res.outOfTime)
+                    break;
+                else
                 {
-                    newMoveList.Reverse();
-                    bestMove = newMoveList.First();
-                    oldMoveList = newMoveList;
+                    bestMove = res.bestMove;
                 }
-                else break;
             }
 
             // if no time to find any move, return random move
@@ -50,6 +48,7 @@ namespace ObscureHonoursProject
                 bestMove = startState.GetPossibleMoves().First();
             }
 
+            sw.Stop();
             return bestMove;
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObscureHonoursProject
+namespace ObscureHonoursProject.Searcher
 {
     /* Interface for a mutable state to be used for alpha-beta search
      * Assumes that this is a two-player sequential game with a minimizing and maximizing player
@@ -14,6 +14,9 @@ namespace ObscureHonoursProject
         // return a list of possible moves from this state
         // undefined if IsFinal()
         List<Move> GetPossibleMoves();
+
+        // returns hashcode of the state (use ZobristHasher)
+        int GetHashCode();
 
         // executes move
         // modifies this
