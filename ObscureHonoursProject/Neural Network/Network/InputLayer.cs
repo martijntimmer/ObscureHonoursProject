@@ -8,6 +8,7 @@ namespace ObscureHonoursProject
 {
     class InputLayer : Layer
     {
+        
         public InputLayer(int nodes)
             : base(null, nodes)
         {
@@ -28,7 +29,7 @@ namespace ObscureHonoursProject
             throw new Exception("Can not update an input layer");
         }
 
-        public void SetValues(int[] vals)
+        public void SetValues(double[] vals)
         {
             for (int i = 0; i < vals.Length; i++)
                 nodes[i].Value = vals[i];

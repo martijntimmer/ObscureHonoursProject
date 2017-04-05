@@ -8,6 +8,6 @@ namespace ObscureHonoursProject
 {
     interface Selector
     {
-       // List<NeuralNetwork> Select(Population population, int amount);
+        List<NeuralNetwork> Select(Population population, int amount);
     }
 }

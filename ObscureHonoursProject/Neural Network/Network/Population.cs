@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObscureHonoursProject.Network
+namespace ObscureHonoursProject
 {
     class Population
     {
@@ -15,8 +15,8 @@ namespace ObscureHonoursProject.Network
         {
             get
             {
-                if (fittest != null)
-                    return fittest;
+              //  if (fittest != null)
+               //     return fittest;
 
                 fittest = individuals[0];
                 for (int i = 0; i < individuals.Length; i++)
@@ -48,7 +48,7 @@ namespace ObscureHonoursProject.Network
             get { return individuals[i]; }
         }
 
-        public void Evaluate(int[] input)
+        public void Evaluate(double[] input)
         {
             foreach (NeuralNetwork indiv in individuals)
                 indiv.Evaluate(input);

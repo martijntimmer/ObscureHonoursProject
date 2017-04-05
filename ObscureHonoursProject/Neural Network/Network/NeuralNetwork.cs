@@ -16,7 +16,7 @@ namespace ObscureHonoursProject
         public double Fitness;
         const int HIDDEN_NODES = 2;
         double[] weights;
-
+        int numHidden = 0;
         int numWeights = -1;
         public int NumWeights
         {
@@ -33,7 +33,9 @@ namespace ObscureHonoursProject
 
         public NeuralNetwork(int numInputs, int numOutputs, int numHidden = 1)
         {
+            this.numHidden = numHidden;
             inputLayer = new InputLayer(numInputs);
+            hiddenLayer = new List<Layer>();
             hiddenLayer.Add(new Layer(inputLayer, HIDDEN_NODES));
             for (int i = 1; i < numHidden; i++)
             hiddenLayer.Add(new Layer(hiddenLayer[i-1], HIDDEN_NODES));
@@ -41,26 +43,15 @@ namespace ObscureHonoursProject
 
             layers = new List<Layer>();
             layers.Add(inputLayer);
-           // layers.AddRange()
+            layers.AddRange(hiddenLayer);
             layers.Add(outputLayer);
         }
-
-        public NeuralNetwork(NeuralNetwork original)
-        {
-            inputLayer = new InputLayer(original.inputLayer.nodes.Length);
-          //  hiddenLayer = new Layer(inputLayer, HIDDEN_NODES);
-          //  outputLayer = new Layer(hiddenLayer, original.outputLayer.nodes.Length);
-
-            layers = new List<Layer>();
-            layers.Add(inputLayer);
-         //   layers.Add(hiddenLayer);
-            layers.Add(outputLayer);
-        }
-
-        public double[] Evaluate(int[] input)
+        
+        public double[] Evaluate(double[] input)
         {
             inputLayer.SetValues(input);
-          //  hiddenLayer.Update();
+            for (int i = 0; i < numHidden; i++)
+                hiddenLayer[i].Update();
             outputLayer.Update();
             return outputLayer.GetValues();
         }
@@ -80,6 +71,7 @@ namespace ObscureHonoursProject
         {
             foreach (Layer layer in layers)
                 start = layer.UpdateWeights(input, start);
+            weights = null;
             return start;
         }
     }
