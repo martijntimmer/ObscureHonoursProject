@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObscureHonoursProject
+namespace ObscureHonoursProject.Searcher
 {
     /* Interface for a mutable state to be used for alpha-beta search
      * Assumes that this is a two-player sequential game with a minimizing and maximizing player
