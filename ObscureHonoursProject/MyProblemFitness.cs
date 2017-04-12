@@ -8,6 +8,7 @@ namespace ObscureHonoursProject
         public MyProblemFitness()
         {
             network = new NeuralNetwork(2, 1);
+            
    
         }
 
