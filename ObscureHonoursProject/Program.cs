@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     {
         static void Main(string[] args)
         {
-            MartijnTest();
+            //MartijnTest();
             //ToonTest();
         }
 
