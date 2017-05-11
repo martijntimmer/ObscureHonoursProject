@@ -18,6 +18,7 @@ namespace ObscureHonoursProject
         int[,] macro = new int[3, 3];
         UTTTMove[,] moveArray = new UTTTMove[9, 9];
         int winner = 0;
+        int playerNum;
         bool activePlayer; // our bot active <=> activePlayer == true
         bool gameOver = false;
 
@@ -51,7 +52,7 @@ namespace ObscureHonoursProject
             }
 
             //Our turn
-            activePlayer = weArePlayerOne;
+            playerNum = (weArePlayerOne ? 1 : 2);
             this.zobristHasher = zobristHasher;
             this.hashCode = zobristHasher.getOriginalHashcode();
         }
@@ -175,7 +176,7 @@ namespace ObscureHonoursProject
                 int macroState = macro[i % 3, i / 3];
                 if (macroState > 0)
                 {
-                    double multiplier = (macroState == 2 ? -1 : 1);
+                    double multiplier = (macroState == playerNum ? 1 : -1);
                     score += multiplier * macroParam * fieldScore[i % 3, i / 3];
                 }
                 else
@@ -189,7 +190,7 @@ namespace ObscureHonoursProject
                             int fieldState = field[xBase + x, yBase + y];
                             if (fieldState > 0)
                             {
-                                double multiplier = (fieldState == 2 ? -1 : 1);
+                                double multiplier = (fieldState == playerNum ? 1 : -1);
                                 score += multiplier * fieldParam * fieldScore[x, y];
                             }
                         }
