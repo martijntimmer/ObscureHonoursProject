@@ -31,7 +31,7 @@ namespace ObscureHonoursProject
 
         // Generate state from given engine string
         // Generally always used to parse 
-        public UTTTState(String fieldString, String macroString)
+        public UTTTState(String fieldString, String macroString, ZobristHasher zobristHasher, bool weArePlayerOne)
         {
             String[] fieldArray = fieldString.Split(',');
             for (int i = 0; i != 81; i++)
@@ -51,7 +51,8 @@ namespace ObscureHonoursProject
             }
 
             //Our turn
-            activePlayer = true;
+            activePlayer = weArePlayerOne;
+            this.zobristHasher = zobristHasher;
             this.hashCode = zobristHasher.getOriginalHashcode();
         }
 
