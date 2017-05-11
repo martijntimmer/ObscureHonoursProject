@@ -12,10 +12,10 @@ namespace ObscureHonoursProject
         {
             //MartijnTest();
             //ToonTest();
-            RealMain();
+            RealMainEatCheese();
         }
 
-        private static void RealMain()
+        private static void RealMainEatCheese()
         {
             TimedSearcher searcher = new TimedSearcher();
             ZobristHasher zobristHasher = new ZobristHasher(9, 9, 2);
