@@ -28,6 +28,7 @@ namespace ObscureHonoursProject
 
             // iterative deepening
             UTTTMove bestMove = null;
+            double bestScore = 0;
             TimedAlphaBetaWIP timedAB = new TimedAlphaBetaWIP(sw, msGiven, startState);
 
             for (int depthLeft = 1; sw.ElapsedMilliseconds < msGiven; depthLeft++)
@@ -39,6 +40,7 @@ namespace ObscureHonoursProject
                 else
                 {
                     bestMove = res.bestMove;
+                    bestScore = res.bestMoveValue;
                 }
             }
 
@@ -49,6 +51,7 @@ namespace ObscureHonoursProject
             }
 
             sw.Stop();
+            Console.Error.WriteLine(bestScore);
             return bestMove;
         }
     }

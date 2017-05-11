@@ -29,11 +29,12 @@ namespace ObscureHonoursProject
             public UTTTMove bestMove;
             public int iteration;
 
-            public void Update(double value, UTTTMove bestMove, int iteration)
+            public void Update(double value, UTTTMove bestMove, UTTTState currentState, Dictionary<int, StateRecord> statesSeen, int iteration)
             {
                 this.value = value;
                 this.bestMove = bestMove;
                 this.iteration = iteration;
+                statesSeen.Add(currentState.GetHashCode(), this);
             }
         }
 
@@ -79,7 +80,7 @@ namespace ObscureHonoursProject
                 res.outOfTime = false;
                 res.bestMove = GetBestMove();
             }
-            catch
+            catch (OutOfTimeException e)
             {
                 res.bestMoveValue = 0;
                 res.bestMove = null;
@@ -96,7 +97,7 @@ namespace ObscureHonoursProject
         // alpha        : Value used for AlphaBeta pruning - maximum value maximizing player can definitely get
         // beta         : Value used for AlphaBeta pruning - minimum value minimizing player can definitely get
         // depthLeft    : How many more depths we are allowed to explore
-        private double AlphaBetaSearch  (UTTTState state, double alpha, double beta, int depthLeft)
+        private double AlphaBetaSearch(UTTTState state, double alpha, double beta, int depthLeft)
         {
             // throw an exception if our player is forced to stop
             if (sw.ElapsedMilliseconds > msGiven)
@@ -113,6 +114,12 @@ namespace ObscureHonoursProject
             // if not final depth, then generate all possible branches
             List<UTTTMove> moves = state.GetPossibleMoves();
 
+            // 
+            if (moves.Count == 0)
+            {
+                throw new OutOfTimeException();
+            }
+
             // if only a single move is possible, don't decrease depth
             if (moves.Count == 1)
             {
@@ -124,13 +131,17 @@ namespace ObscureHonoursProject
             // in the first position to be evaluated. This leads to better pruning.
             StateRecord rec = null;
             statesSeen.TryGetValue(state.GetHashCode(), out rec);
-            if ( rec != null )
+            if (rec != null)
             {
                 if (rec.iteration == iteration)
                 {
                     return rec.value;
                 }
-                FindCopyAndSwap(rec.bestMove, moves, moves.First());
+                if (rec.bestMove != null) FindCopyAndSwap(rec.bestMove, moves, moves.First());
+                statesSeen.Remove(state.GetHashCode());
+            } else
+            {
+                rec = new StateRecord();
             }
 
             // keep track of the best move
@@ -154,19 +165,19 @@ namespace ObscureHonoursProject
                 {
                     // update record and return
                     double res = (alpha + beta) / 2;
-                    rec.Update(res, bestMove, iteration);
+                    rec.Update(res, bestMove, state, statesSeen, iteration);
                     return res;
                 }
             }
             // update record and return
             if (min)
             {
-                rec.Update(beta, bestMove, iteration);
+                rec.Update(beta, bestMove, state, statesSeen, iteration);
                 return beta;
             }
             else
             {
-                rec.Update(alpha, bestMove, iteration);
+                rec.Update(alpha, bestMove, state, statesSeen, iteration);
                 return alpha;
             }
         }

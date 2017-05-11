@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ObscureHonoursProject
@@ -26,11 +27,12 @@ namespace ObscureHonoursProject
             String field = null;
             String macroboard = null;
             bool weArePlayerOne = false;
-
-            while (Console.KeyAvailable)
-            {
+            while (true)
+                {
+                Thread.Sleep(10);
                 String line = Console.In.ReadLine();
                 if (line.Length == 0) { continue; }
+                Console.Error.WriteLine(line);
                 String[] parts = line.Split(' ');
                 switch (parts[0])
                 {
@@ -58,16 +60,16 @@ namespace ObscureHonoursProject
                         switch (parts[2])
                         {
                             case "field":
-                                field = parts[2];
+                                field = parts[3];
                                 break;
                             case "macroboard":
-                                macroboard = parts[2];
+                                macroboard = parts[3];
                                 break;
                         }
                         break;
                     case "action":
                         currentState = new UTTTState(field, macroboard, zobristHasher, weArePlayerOne);
-                        UTTTMove chosen = searcher.FindBestMove(currentState, 10000);
+                        UTTTMove chosen = searcher.FindBestMove(currentState, 2000);
                         Console.WriteLine($"place_move {chosen.x} {chosen.y}");
                         Console.Out.Flush();
                         break;
@@ -80,7 +82,7 @@ namespace ObscureHonoursProject
 
         private static void ToonTest()
         {
-            UTTTState state = new UTTTState(
+            /*UTTTState state = new UTTTState(
                 "0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
                 "-1, -1, 0, 0, 0, 0, 0, 0, 0");
             UTTTMove[] moveArray = state.GetPossibleMoves().ToArray();
@@ -88,7 +90,7 @@ namespace ObscureHonoursProject
             {
                 Console.WriteLine(move.ToString());
             }
-            Console.ReadKey();
+            Console.ReadKey();*/
         }
 
         private static void MartijnTest()
