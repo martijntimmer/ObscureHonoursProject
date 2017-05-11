@@ -8,9 +8,16 @@ namespace ObscureHonoursProject
 {
     class UTTTState
     {
+        // Evaluation parameters
+        private double[,] fieldScore = new double[3, 3] { { 3, 2, 3 }, { 2, 5, 2 }, { 3, 2, 3 } };
+        private const double macroParam = 25d;
+        private const double fieldParam = 1d;
+        private const double winParam = 123456789d;
+
         int[,] field = new int[9, 9];
         int[,] macro = new int[3, 3];
         UTTTMove[,] moveArray = new UTTTMove[9, 9];
+        int winner = 0;
         bool activePlayer; // our bot active <=> activePlayer == true
         bool gameOver = false;
 
@@ -109,39 +116,87 @@ namespace ObscureHonoursProject
 
             return 0;
         }
+
         private void CheckMacro()
         {
             //vertical rows
             for (int i = 0; i != 3; i++)
             {
-                if ((field[i, 0] == field[i, 1] && field[i, 1] == field[i, 2])
-                 || (field[0, i] == field[1, i] && field[1, i] == field[2, i]))
+                if (macro[i, 0] == macro[i, 1] && macro[i, 1] == macro[i, 2])
                 {
                     gameOver = true;
+                    winner = macro[i, 0];
+                    return;
+                }
+                if (macro[0, i] == macro[1, i] && macro[1, i] == macro[2, i])
+                {
+                    gameOver = true;
+                    winner = macro[0, i];
                     return;
                 }
             }
             //diagonals
-            if (field[0, 0] == field[1,  1] && field[ 1,  1] == field[ 2,  2])
+            if (macro[0, 0] == macro[1,  1] && macro[ 1,  1] == macro[ 2,  2])
             {
                 gameOver = true;
+                winner = macro[0, 0];
                 return;
             }
-            if (field[0, 2] == field[ 1,  1] && field[ 1, 1] == field[ 2, 0])
+            if (macro[0, 2] == macro[ 1,  1] && macro[ 1, 1] == macro[ 2, 0])
             {
                 gameOver = true;
+                winner = macro[1, 1];
                 return;
             }
 
             gameOver = false;
+            winner = 0;
             return;
         }
 
-        public int Evaluate()
+        public double Evaluate()
         {
+            double score = 0;
             // 1 is our bot
             // 2 is him bot
-            throw new NotImplementedException();
+            if (gameOver)
+            {
+                if (winner == 1)
+                {
+                    return winParam;
+                }
+                if (winner == 2)
+                {
+                    return -winParam;
+                }
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                int macroState = macro[i % 3, i / 3];
+                if (macroState > 0)
+                {
+                    double multiplier = (macroState == 2 ? -1 : 1);
+                    score += multiplier * macroParam * fieldScore[i % 3, i / 3];
+                }
+                else
+                {
+                    int xBase = i % 3 * 3;
+                    int yBase = i / 3 * 3;
+                    for (int x = 0; x < 3; x++)
+                    {
+                        for (int y = 0; y < 3; y++)
+                        {
+                            int fieldState = field[xBase + x, yBase + y];
+                            if (fieldState > 0)
+                            {
+                                double multiplier = (fieldState == 2 ? -1 : 1);
+                                score += multiplier * fieldParam * fieldScore[x, y];
+                            }
+                        }
+                    }
+                }
+            }
+            return score;
         }
 
         public List<UTTTMove> GetPossibleMoves()

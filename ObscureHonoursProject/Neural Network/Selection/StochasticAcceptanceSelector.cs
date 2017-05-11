@@ -10,7 +10,7 @@ namespace ObscureHonoursProject
     class StochasticAcceptanceSelector : Selector
     {
 
-       /* public List<NeuralNetwork> Select(Population population, int amount)
+        public List<NeuralNetwork> Select(Population population, int amount)
         {
             double max = population.Fittest.Fitness;
             List<NeuralNetwork> selected = new List<NeuralNetwork>();
@@ -21,13 +21,13 @@ namespace ObscureHonoursProject
                 while (!found)
                 {
                     index = Helper.GetRandomInt(population.Size);
-                    if (Helper.GetRandom() < population[i].Fitness)
+                    if (Helper.GetRandom() < population[index].Fitness)
                         found = true;
                 }
                 selected.Add(population[i]);
             }
 
             return selected;
-        }*/
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObscureHonoursProject.Neural_Network
+namespace ObscureHonoursProject
 {
     class Mutation
     {
@@ -20,7 +20,7 @@ namespace ObscureHonoursProject.Neural_Network
             for(int i = 0; i < input.Length; i++)
             {
                 if (Helper.GetRandom() < mutationRate)
-                    output[i] += Helper.GetRandom() * 5 - 2.5;
+                    output[i] = Helper.GetRandom() * 30 - 15;
                 else output[i] = input[i];
             }
             return output;

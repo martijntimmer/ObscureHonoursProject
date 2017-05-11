@@ -21,8 +21,7 @@ namespace ObscureHonoursProject
         public Layer(Layer prevLayer, int nodes)
         {
             this.numNodes = nodes;
-            createLayer(prevLayer);
-            
+            createLayer(prevLayer);            
         }
 
         protected virtual void createLayer(Layer prevLayer)
